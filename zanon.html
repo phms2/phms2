@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Perfect Malta Getaway | O Itinerário Perfeito</title>
+    
+    <!-- Tailwind Configuration for Dark Mode -->
+    <script>
+        tailwind = {
+            config: {
+                darkMode: 'class',
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        h1, h2, h3, h4, .serif { font-family: 'Playfair Display', serif; }
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); }
+        .dark .glass { background: rgba(15, 23, 42, 0.85); }
+        
+        /* Language Toggle Logic */
+        :root[lang="en"] .lang-pt { display: none !important; }
+        :root[lang="pt"] .lang-en { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 antialiased">
+
+    <!-- Floating Action Bar -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2 glass p-2 rounded-full shadow-lg border border-slate-200 dark:border-slate-700">
+        <!-- Language Toggle -->
+        <button onclick="toggleLanguage()" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors font-bold text-sm text-slate-700 dark:text-slate-300" title="Toggle Language">
+            <span id="lang-indicator">EN</span>
+        </button>
+        <!-- Dark Mode Toggle -->
+        <button onclick="toggleDarkMode()" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-700 dark:text-slate-300" title="Toggle Dark Mode">
+            <i data-lucide="moon" id="theme-icon" class="w-5 h-5"></i>
+        </button>
+        <!-- Share Button -->
+        <button onclick="openShareModal()" class="w-10 h-10 flex items-center justify-center rounded-full bg-amber-500 hover:bg-amber-600 text-white transition-colors shadow-sm" title="Share">
+            <i data-lucide="share-2" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="share-modal" class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-80 overflow-hidden transform scale-95 transition-transform duration-300 border border-slate-100 dark:border-slate-700">
+            <div class="p-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                <h3 class="font-bold text-lg dark:text-white">
+                    <span class="lang-en">Share Itinerary</span>
+                    <span class="lang-pt">Compartilhar Roteiro</span>
+                </h3>
+                <button onclick="closeShareModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-2 flex flex-col">
+                <button onclick="shareWhatsApp()" class="flex items-center gap-3 p-3 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors text-left dark:text-slate-200">
+                    <div class="bg-green-100 dark:bg-green-900/30 text-green-600 p-2 rounded-full"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
+                    <span class="font-medium">WhatsApp</span>
+                </button>
+                <button onclick="shareEmail()" class="flex items-center gap-3 p-3 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors text-left dark:text-slate-200">
+                    <div class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 p-2 rounded-full"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                    <span class="font-medium">Email</span>
+                </button>
+                <button onclick="copyLink()" class="flex items-center gap-3 p-3 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors text-left dark:text-slate-200">
+                    <div class="bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 p-2 rounded-full"><i data-lucide="link" class="w-5 h-5"></i></div>
+                    <span class="font-medium lang-en">Copy Link</span>
+                    <span class="font-medium lang-pt">Copiar Link</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+        <img src="https://drive.google.com/thumbnail?id=1nwMfoh8MpXWmvGNplrR0B4ebnptEd6l3&sz=w1920-h1080" 
+             onerror="this.onerror=null;this.src='https://placehold.co/1920x1080/1e293b/cbd5e1?text=Malta+Coast';"
+             alt="Malta Coast" class="absolute inset-0 w-full h-full object-cover object-center z-0 filter brightness-75">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-slate-900/80 z-0"></div>
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <span class="text-amber-300 font-semibold tracking-widest uppercase text-sm mb-4 block drop-shadow-md">
+                <span class="lang-en">July 12 — July 16 • Mosta Basecamp</span>
+                <span class="lang-pt">12 a 16 de Julho • Base em Mosta</span>
+            </span>
+            <h1 class="text-4xl md:text-6xl text-white font-bold mb-6 drop-shadow-md">
+                <span class="lang-en">The Ultimate Malta Itinerary</span>
+                <span class="lang-pt">O Roteiro Perfeito em Malta</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-100 max-w-2xl mx-auto font-light drop-shadow-md">
+                <span class="lang-en">An unforgettable island getaway designed for our visiting friends. We've crafted the perfect mix of stunning sights, local secrets, and relaxed pacing so you get the full Malta experience (while our little ones happily tag along).</span>
+                <span class="lang-pt">Uma viagem inesquecível desenhada para nossos amigos visitantes. Preparamos a mistura perfeita de vistas incríveis e segredos locais, com um ritmo relaxante para vocês aproveitarem a ilha toda (enquanto nossos pequenos nos acompanham felizes).</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- Logistics & Ground Rules -->
+    <section class="max-w-5xl mx-auto -mt-16 relative z-20 px-4 mb-12">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8 border border-slate-100 dark:border-slate-700 flex flex-col md:flex-row gap-8 transition-colors">
+            <div class="flex-1">
+                <h3 class="text-xl font-bold mb-4 flex items-center text-slate-800 dark:text-white">
+                    <i data-lucide="shield-check" class="w-6 h-6 mr-2 text-emerald-600 dark:text-emerald-400"></i>
+                    <span class="lang-en">The Master Plan</span>
+                    <span class="lang-pt">O Plano Principal</span>
+                </h3>
+                <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                    <li class="flex items-start">
+                        <i data-lucide="car" class="w-4 h-4 mr-2 mt-0.5 text-slate-400 flex-shrink-0"></i>
+                        <span class="lang-en"><strong>Transport:</strong> Host does a solo airport run to avoid cramped luggage tetris. Visitors can use Bolt/eCabs as a Plan B for independent evening exploring.</span>
+                        <span class="lang-pt"><strong>Transporte:</strong> O anfitrião faz a viagem ao aeroporto sozinho para evitar aperto com as malas. Visitantes podem usar Bolt/eCabs como Plano B à noite.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i data-lucide="sun-snow" class="w-4 h-4 mr-2 mt-0.5 text-slate-400 flex-shrink-0"></i>
+                        <span class="lang-en"><strong>Heat Management:</strong> UV Tents & portable fans are locked and loaded. The baby naps happily outside in the shade; the toddler skips naps but will be kept cool.</span>
+                        <span class="lang-pt"><strong>Calor:</strong> Tendas UV e ventiladores portáteis estão prontos. O bebê dorme feliz na sombra; a criança pula a soneca, mas ficará fresquinha.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i data-lucide="baby" class="w-4 h-4 mr-2 mt-0.5 text-slate-400 flex-shrink-0"></i>
+                        <span class="lang-en"><strong>Gear Strategy:</strong> Stroller for flat cities (Valletta main streets, Mdina). Baby carrier is absolutely mandatory for Paradise Bay stairs and St. John's Co-Cathedral.</span>
+                        <span class="lang-pt"><strong>Equipamento:</strong> Carrinho para ruas planas (Valletta, Mdina). O canguru (baby carrier) é obrigatório para as escadas em Paradise Bay e na Concatedral.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i data-lucide="utensils-crossed" class="w-4 h-4 mr-2 mt-0.5 text-slate-400 flex-shrink-0"></i>
+                        <span class="lang-en"><strong>Emergency Meals:</strong> We bought meal preps ("marmitas") good for 2 meals. These are our solid Plan B or C for lunch or dinner on days we want to relax!</span>
+                        <span class="lang-pt"><strong>Refeições de Emergência:</strong> Compramos marmitas que dão para 2 refeições. São nosso sólido Plano B ou C para o almoço ou jantar caso a gente queira relaxar!</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex-1 bg-slate-50 dark:bg-slate-700/50 rounded-xl p-6 border border-slate-100 dark:border-slate-600 transition-colors">
+                <h3 class="text-lg font-bold mb-3 text-slate-800 dark:text-white">
+                    <span class="lang-en">Your Base: Mosta</span>
+                    <span class="lang-pt">Sua Base: Mosta</span>
+                </h3>
+                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                    <span class="lang-en">Centrally located, allowing for quick strikes to the north (beaches/boats) and the south (Valletta/Birgu). A perfect launchpad that allows for easy mid-afternoon retreats if needed.</span>
+                    <span class="lang-pt">Localização central, permitindo viagens rápidas para o norte (praias/barcos) e o sul (Valletta/Birgu). Um ponto de partida perfeito para descansos rápidos à tarde se necessário.</span>
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-semibold">
+                        <span class="lang-en">Stroller Friendly (Mostly)</span>
+                        <span class="lang-pt">Carrinho Acessível</span>
+                    </span>
+                    <span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full text-xs font-semibold">
+                        <span class="lang-en">Shade Optimized</span>
+                        <span class="lang-pt">Otimizado para Sombra</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Itinerary Content -->
+    <main class="max-w-5xl mx-auto px-4 pb-20 space-y-12">
+
+        <!-- DAY 1 -->
+        <article class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors">
+            <div class="bg-slate-800 dark:bg-slate-950 text-white px-6 py-4 flex justify-between items-center transition-colors">
+                <h2 class="text-2xl font-bold m-0 tracking-wide">
+                    <span class="lang-en">Day 1: Arrival & The Silent City</span>
+                    <span class="lang-pt">Dia 1: Chegada e a Cidade Silenciosa</span>
+                </h2>
+                <span class="text-amber-300 font-semibold tracking-wider text-sm">
+                    <span class="lang-en">JULY 12</span>
+                    <span class="lang-pt">12 DE JULHO</span>
+                </span>
+            </div>
+            <div class="p-0 md:flex">
+                <div class="md:w-1/3 h-64 md:h-auto border-r border-slate-100 dark:border-slate-700">
+                    <img src="https://drive.google.com/thumbnail?id=1G5MTWzl3FtG80acbXrBJA6eSq1N961Mp&sz=w800-h800" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x800/1e293b/cbd5e1?text=Mdina';"
+                         alt="Mdina" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6 md:p-8 md:w-2/3 space-y-6">
+                    
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">13:20 &ndash; 15:30</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Flight FR1510 Arrival & Rapid Refresh</span>
+                                <span class="lang-pt">Chegada (Voo FR1510) e Pausa Rápida</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Flight arrives from Porto at 13:20! You pick up Vitor and Natália at the airport solo (max space efficiency). Quick drop-off at home in Mosta, splash of water, and out the door.</span>
+                                <span class="lang-pt">O voo do Porto chega às 13:20! Você busca o Vitor e a Natália no aeroporto sozinho (máximo de espaço). Passagem rápida na casa em Mosta para refrescar, e logo pé na estrada.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">15:30 &ndash; 17:30</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Mosta Rotunda & Dingli Cliffs</span>
+                                <span class="lang-pt">Rotunda de Mosta e Falésias de Dingli</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Walk to the <a href="https://www.google.com/maps/search/Mosta+Rotunda" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Mosta Rotunda</strong></a> (huge, spacious, highly stroller friendly). After a quick tour, drive up to <a href="https://www.google.com/maps/search/Dingli+Cliffs" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Dingli Cliffs</strong></a> (~16:45) for sweeping, breezy sea views.</span>
+                                <span class="lang-pt">Caminhada até a <a href="https://www.google.com/maps/search/Mosta+Rotunda" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Rotunda de Mosta</strong></a> (enorme, muito espaço para o carrinho). Depois de um rápido tour, dirija até as <a href="https://www.google.com/maps/search/Dingli+Cliffs" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Falésias de Dingli</strong></a> (~16:45) para uma vista incrível do mar.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">17:45 &ndash; 19:30</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Mdina at Golden Hour</span>
+                                <span class="lang-pt">Mdina na "Golden Hour"</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Drive a few minutes down the road to <a href="https://www.google.com/maps/search/Mdina+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Mdina</a>. The day-trippers are gone. Paved streets are perfect for the stroller, and the high walls provide great shade for a baby nap while the toddler explores.</span>
+                                <span class="lang-pt">Dirija poucos minutos até <a href="https://www.google.com/maps/search/Mdina+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Mdina</a>. Os turistas do dia já foram embora. As ruas planas são ótimas para o carrinho e os muros altos garantem sombra para a soneca do bebê.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-100 dark:border-slate-600 mt-4 transition-colors">
+                        <div class="flex items-center text-amber-600 dark:text-amber-400 font-bold mb-2 text-lg">
+                            <i data-lucide="utensils" class="w-5 h-5 mr-2"></i>
+                            <span class="lang-en">Dinner Recommendation</span>
+                            <span class="lang-pt">Recomendação de Jantar</span>
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300">
+                            <span class="lang-en"><a href="https://www.tripadvisor.com/Search?q=Point+de+Vue+Rabat+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Point de Vue (Rabat)</strong></a>: Just outside Mdina gates. Highly spacious, great value local/Med food, excellent with kids. Alternatively, <a href="https://www.tripadvisor.com/Search?q=Coogi%27s+Mdina" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Coogi's</strong></a> inside Mdina for a beautiful courtyard. <em>(Split option: Visitors can stay for drinks at Bridge Bar while you take the kids home).</em></span>
+                            <span class="lang-pt"><a href="https://www.tripadvisor.com/Search?q=Point+de+Vue+Rabat+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Point de Vue (Rabat)</strong></a>: Fora dos portões de Mdina. Muito espaço, ótimo custo-benefício e excelente com crianças. Alternativa: <a href="https://www.tripadvisor.com/Search?q=Coogi%27s+Mdina" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Coogi's</strong></a> dentro de Mdina com um belo pátio. <em>(Os visitantes podem ficar para uns drinks no Bridge Bar enquanto você volta para casa com as crianças).</em></span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </article>
+
+        <!-- DAY 2 -->
+        <article class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors">
+            <div class="bg-slate-800 dark:bg-slate-950 text-white px-6 py-4 flex justify-between items-center transition-colors">
+                <h2 class="text-2xl font-bold m-0 tracking-wide">
+                    <span class="lang-en">Day 2: Capital Culture & Beautiful Birgu</span>
+                    <span class="lang-pt">Dia 2: Cultura na Capital e a Bela Birgu</span>
+                </h2>
+                <span class="text-amber-300 font-semibold tracking-wider text-sm">
+                    <span class="lang-en">JULY 13</span>
+                    <span class="lang-pt">13 DE JULHO</span>
+                </span>
+            </div>
+            <div class="p-0 flex flex-col-reverse md:flex-row">
+                <div class="p-6 md:p-8 md:w-2/3 space-y-6 border-r border-slate-100 dark:border-slate-700">
+                    
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">09:00 &ndash; 12:30</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Valletta: Gold, Gardens & War Rooms</span>
+                                <span class="lang-pt">Valletta: Ouro, Jardins e Salas de Guerra</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Park outside the gates (MCP car park). Head straight to <a href="https://www.google.com/maps/search/St.+John's+Co-Cathedral+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>St. John’s Co-Cathedral</strong></a> before the crowds (use baby carrier here). Next, hit <a href="https://www.google.com/maps/search/Upper+Barrakka+Gardens+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Upper Barrakka Gardens</strong></a> for views and toddler running space, then take the lift down to the spacious, cool <a href="https://www.google.com/maps/search/Lascaris+War+Rooms+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Lascaris War Rooms</strong></a>.</span>
+                                <span class="lang-pt">Estacione fora dos portões (MCP car park). Vá direto à <a href="https://www.google.com/maps/search/St.+John's+Co-Cathedral+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Concatedral de São João</strong></a> antes da multidão (use canguru aqui). Em seguida, os jardins <a href="https://www.google.com/maps/search/Upper+Barrakka+Gardens+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Upper Barrakka Gardens</strong></a>, desça pelo elevador para as frescas e espaçosas <a href="https://www.google.com/maps/search/Lascaris+War+Rooms+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Lascaris War Rooms</strong></a>.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">12:30 &ndash; 14:00</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">A Hearty Local Lunch</span>
+                                <span class="lang-pt">Um Farto Almoço Local</span>
+                            </h4>
+                            <div class="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg border border-slate-100 dark:border-slate-600 mt-2 mb-2 transition-colors">
+                                <p class="text-slate-700 dark:text-slate-300">
+                                    <span class="lang-en"><a href="https://www.tripadvisor.com/Search?q=Nenu+The+Artisan+Baker+Valletta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Nenu The Artisan Baker</strong></a>: St. Dominic Street. Bustling, great prices, welcoming to families, and serves incredible traditional Maltese <em>ftira</em> (sourdough pizza).</span>
+                                    <span class="lang-pt"><a href="https://www.tripadvisor.com/Search?q=Nenu+The+Artisan+Baker+Valletta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Nenu The Artisan Baker</strong></a>: Rua St. Dominic. Preços ótimos, ideal para famílias, e serve a incrível <em>ftira</em> maltesa (tipo de pizza tradicional com massa de pão).</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">14:00 &ndash; 17:00</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Across the Harbor to Birgu</span>
+                                <span class="lang-pt">Atravessando o Porto para Birgu</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Since we have a car, we can easily drive over to <a href="https://www.google.com/maps/search/Birgu+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Birgu</a> (~15 mins). However, if we prefer the scenic route, parking in Valletta and catching the traditional <em>dghajsa</em> (water taxi) is only €2 per person. The 10-minute boat ride is a massive hit with toddlers! Explore the quiet, flower-lined streets of Birgu.</span>
+                                <span class="lang-pt">Como estamos de carro, podemos facilmente dirigir até <a href="https://www.google.com/maps/search/Birgu+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Birgu</a> (~15 mins). No entanto, se preferirmos a rota cênica, estacionar em Valletta e pegar o <em>dghajsa</em> (táxi aquático tradicional) custa apenas €2 por pessoa. A viagem de barco de 10 minutos é um sucesso com as crianças! Explore as ruas tranquilas e floridas de Birgu.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-100 dark:border-slate-600 mt-4 transition-colors">
+                        <div class="flex items-center text-amber-600 dark:text-amber-400 font-bold mb-2 text-lg">
+                            <i data-lucide="utensils" class="w-5 h-5 mr-2"></i>
+                            <span class="lang-en">Dinner Recommendation</span>
+                            <span class="lang-pt">Recomendação de Jantar</span>
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300 mb-4">
+                            <span class="lang-en"><a href="https://www.tripadvisor.com/Search?q=Don+Berto+Birgu" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Don Berto (Birgu)</strong></a>: Right on the waterfront. Large outdoor terrace overlooking superyachts. Lots of space for the group and great pasta/grill options.</span>
+                            <span class="lang-pt"><a href="https://www.tripadvisor.com/Search?q=Don+Berto+Birgu" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Don Berto (Birgu)</strong></a>: Bem em frente à água. Grande terraço com vista para os iates. Muito espaço para o grupo e ótimas opções de massas e grelhados.</span>
+                        </p>
+                        
+                        <div class="pt-4 border-t border-slate-200 dark:border-slate-600">
+                            <div class="flex items-center text-indigo-500 dark:text-indigo-400 font-bold mb-2 text-lg">
+                                <i data-lucide="martini" class="w-5 h-5 mr-2"></i>
+                                <span class="lang-en">Late Night: Couples' Walk & Drinks</span>
+                                <span class="lang-pt">Noite: Passeio do Casal e Drinks</span>
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-300">
+                                <span class="lang-en">If Vitor and Natália want some vibrant nightlife, they can head to <a href="https://www.google.com/maps/search/St.+Julian's+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>St. Julian's / Paceville</strong></a>. Great for a walk along the bay, followed by drinks at the <a href="https://www.google.com/maps/search/Hilton+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Hilton</strong></a> or the nearby <a href="https://www.tripadvisor.com/Search?q=Cafe+Cuba+St+Julians" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Cuba</strong></a>.</span>
+                                <span class="lang-pt">Se o Vitor e a Natália quiserem agito à noite, podem ir para <a href="https://www.google.com/maps/search/St.+Julian's+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>St. Julian's / Paceville</strong></a>. Ótimo para caminhar pela orla, com drinks no <a href="https://www.google.com/maps/search/Hilton+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Hilton</strong></a> ou no <a href="https://www.tripadvisor.com/Search?q=Cafe+Cuba+St+Julians" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Cuba</strong></a> ali perto.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="md:w-1/3 h-64 md:h-auto border-l border-slate-100 dark:border-slate-700">
+                    <img src="https://drive.google.com/thumbnail?id=1L2oQDXnBCtVCHhUKh2IbSqWJwdkzFbjE&sz=w800-h800" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x800/1e293b/cbd5e1?text=St.+John\'s+Co-Cathedral';"
+                         alt="St. John's Co-Cathedral" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </article>
+
+        <!-- DAY 3 -->
+        <article class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors">
+            <div class="bg-slate-800 dark:bg-slate-950 text-white px-6 py-4 flex justify-between items-center transition-colors">
+                <h2 class="text-2xl font-bold m-0 tracking-wide">
+                    <span class="lang-en">Day 3: Hornblower Cruise & The Blue Lagoon</span>
+                    <span class="lang-pt">Dia 3: Cruzeiro Hornblower e a Lagoa Azul</span>
+                </h2>
+                <span class="text-amber-300 font-semibold tracking-wider text-sm">
+                    <span class="lang-en">JULY 14</span>
+                    <span class="lang-pt">14 DE JULHO</span>
+                </span>
+            </div>
+            <div class="p-0 md:flex">
+                <div class="md:w-1/3 h-64 md:h-auto border-r border-slate-100 dark:border-slate-700">
+                    <img src="https://drive.google.com/thumbnail?id=1xmSzQAr055ZvtjwQlfW0W8QuBmMnu-_7&sz=w800-h800" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x800/1e293b/cbd5e1?text=Blue+Lagoon';"
+                         alt="Blue Lagoon" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6 md:p-8 md:w-2/3 space-y-6">
+                    
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">07:30 &ndash; 09:30</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Morning Prep & Boarding</span>
+                                <span class="lang-pt">Preparação Matinal e Embarque</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Wake up, have a hearty breakfast, and leave Mosta with time to spare. Head to the pick-up point: <a href="https://www.google.com/maps/search/Bugibba+Jetty+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Bugibba Jetty, Dawret il-Gzejjer (St. Paul’s Bay)</strong></a>. <em>Tip for Natália:</em> Board early (around 08:30-09:00) to guarantee normal chairs on the top level facing forward (best for motion sickness), and request a life vest from the crew immediately for peace of mind!</span>
+                                <span class="lang-pt">Acordem, tomem um bom café da manhã e saiam de Mosta com folga. Sigam para o ponto de encontro: <a href="https://www.google.com/maps/search/Bugibba+Jetty+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Bugibba Jetty, Dawret il-Gzejjer (St. Paul’s Bay)</strong></a>. <em>Dica para a Natália:</em> Embarquem cedo (lá pelas 08:30-09:00) para garantir cadeiras normais no andar de cima, de frente para o movimento (melhor contra enjoos), e peçam um colete salva-vidas à tripulação logo na entrada para maior conforto!</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">10:00 &ndash; 17:00</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Hornblower Cruise to Comino</span>
+                                <span class="lang-pt">Cruzeiro Hornblower para Comino</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">The boat departs at 10:00 sharp! Enjoy the 10m slide, the beautiful views, and a 4.5h stop at the <a href="https://www.google.com/maps/search/Blue+Lagoon+Comino" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Blue Lagoon</a>. Bring cash for lunch, drinks, or tips (not included). <strong>Docs & Access:</strong> You already have the required QR codes specifically for <em>accessing the island itself</em> (<a href="https://drive.google.com/file/d/1k4PszNltOhXT5BPDntw_S1vbPS_cBb31/view?usp=sharing" target="_blank" class="text-blue-500 hover:text-blue-600 underline font-semibold transition-colors">SEE QR CODES</a>). The boat booking documents and invoice (Order #3694) can be found <a href="https://drive.google.com/drive/folders/1MSZdB8WtR_kcib4QOO9kuYpd9ns71lim?usp=sharing" target="_blank" class="text-blue-500 hover:text-blue-600 underline font-semibold transition-colors">HERE</a>.</span>
+                                <span class="lang-pt">O barco sai às 10:00 em ponto! Aproveitem o escorregador de 10m, as vistas e uma parada de 4h30 na <a href="https://www.google.com/maps/search/Blue+Lagoon+Comino" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Lagoa Azul</a>. Levem dinheiro vivo para o almoço, bebidas e gorjetas (não inclusos). <strong>Docs e Acesso:</strong> Vocês já têm os QR codes obrigatórios específicos para <em>acessar a ilha em si</em> (<a href="https://drive.google.com/file/d/1k4PszNltOhXT5BPDntw_S1vbPS_cBb31/view?usp=sharing" target="_blank" class="text-blue-500 hover:text-blue-600 underline font-semibold transition-colors">VER QR CODES</a>). Os documentos da reserva do barco e recibo (Pedido #3694) estão <a href="https://drive.google.com/drive/folders/1MSZdB8WtR_kcib4QOO9kuYpd9ns71lim?usp=sharing" target="_blank" class="text-blue-500 hover:text-blue-600 underline font-semibold transition-colors">AQUI</a>.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-100 dark:border-slate-600 mt-4 transition-colors">
+                        <div class="flex items-center text-amber-600 dark:text-amber-400 font-bold mb-2 text-lg">
+                            <i data-lucide="utensils" class="w-5 h-5 mr-2"></i>
+                            <span class="lang-en">Dinner Recommendation</span>
+                            <span class="lang-pt">Recomendação de Jantar</span>
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300">
+                            <span class="lang-en">After a long day at sea, keep it extremely relaxed. We recommend throwing some <strong>burgers or BBQ at home</strong>, or simply ordering food delivery for a restful night. Alternatively, head to <a href="https://www.tripadvisor.com/Search?q=Cafe+Cuba+Pama+Mosta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Cuba</strong></a> at the Pama Shopping Complex for an easy, satisfying meal nearby.</span>
+                            <span class="lang-pt">Depois de um longo dia no mar, a palavra-chave é descanso. Recomendamos fazer <strong>hambúrgueres/churrasco em casa</strong>, ou pedir um delivery para uma noite relaxante. Outra ótima opção é ir ao <a href="https://www.tripadvisor.com/Search?q=Cafe+Cuba+Pama+Mosta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Cuba</strong></a> no Pama Shopping Complex para uma refeição fácil e muito perto.</span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </article>
+
+        <!-- DAY 4 -->
+        <article class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors">
+            <div class="bg-slate-800 dark:bg-slate-950 text-white px-6 py-4 flex justify-between items-center transition-colors">
+                <h2 class="text-2xl font-bold m-0 tracking-wide">
+                    <span class="lang-en">Day 4: Paradise Bay & A Sunset Farewell</span>
+                    <span class="lang-pt">Dia 4: Paradise Bay e a Despedida</span>
+                </h2>
+                <span class="text-amber-300 font-semibold tracking-wider text-sm">
+                    <span class="lang-en">JULY 15</span>
+                    <span class="lang-pt">15 DE JULHO</span>
+                </span>
+            </div>
+            <div class="p-0 flex flex-col-reverse md:flex-row">
+                <div class="p-6 md:p-8 md:w-2/3 space-y-6 border-r border-slate-100 dark:border-slate-700">
+                    
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">10:30 &ndash; 15:00</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Paradise Bay Beach Fortress</span>
+                                <span class="lang-pt">Fortaleza em Paradise Bay</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Drive north to <a href="https://www.google.com/maps/search/Paradise+Bay+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Paradise Bay</a>. <em>Crucial: Bring the baby carrier for the stairs down!</em> Deploy the UV tents and fans on the sand. The toddler gets prime sandcastle real estate, the baby naps in the cool tent, and you enjoy a beautiful Mediterranean beach day.</span>
+                                <span class="lang-pt">Siga para o norte até <a href="https://www.google.com/maps/search/Paradise+Bay+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Paradise Bay</a>. <em>Crucial: Leve o canguru para descer as escadas!</em> Monte as tendas UV na areia. A criança ganha o melhor espaço para os castelos de areia, o bebê dorme fresco na tenda, e vocês curtem o dia na praia.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">15:30 &ndash; 18:00</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Wash Up & Pack</span>
+                                <span class="lang-pt">Banho e Fazer as Malas</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Head home to Mosta. Visitors use this window to pack their bags fully, ensuring a stress-free exit for their 07:15 flight the following morning.</span>
+                                <span class="lang-pt">Volte para Mosta. Os visitantes podem usar este intervalo para arrumar todas as malas, garantindo que tudo flua perfeitamente antes do voo das 07:15 de amanhã.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-100 dark:border-slate-600 mt-4 transition-colors">
+                        <div class="flex items-center text-amber-600 dark:text-amber-400 font-bold mb-2 text-lg">
+                            <i data-lucide="moon-star" class="w-5 h-5 mr-2"></i>
+                            <span class="lang-en">Night Recommendation: Sliema</span>
+                            <span class="lang-pt">Recomendação da Noite: Sliema</span>
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300 mb-4">
+                            <span class="lang-en">For a more urban, upscale vibe, drive into <a href="https://www.google.com/maps/search/Sliema+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Sliema</a>. Recommended spots for a final night celebration: <a href="https://www.tripadvisor.com/Search?q=Hammett%27s+Gastro+Bar+Sliema" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Hammet's Gastro Bar</strong></a> or <a href="https://www.tripadvisor.com/Search?q=Tiffany%27s+Sliema" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Tiffany's</strong></a>. Perfect for a vibrant atmosphere by the water.</span>
+                            <span class="lang-pt">Para uma vibe mais urbana e sofisticada, sigam para <a href="https://www.google.com/maps/search/Sliema+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Sliema</a>. Lugares recomendados para a celebração da última noite: <a href="https://www.tripadvisor.com/Search?q=Hammett%27s+Gastro+Bar+Sliema" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Hammet's Gastro Bar</strong></a> ou <a href="https://www.tripadvisor.com/Search?q=Tiffany%27s+Sliema" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Tiffany's</strong></a>. Perfeito para uma atmosfera vibrante à beira-mar.</span>
+                        </p>
+                        
+                        <div class="pt-4 border-t border-slate-200 dark:border-slate-600">
+                            <div class="flex items-center text-slate-500 dark:text-slate-400 font-bold mb-2 text-lg">
+                                <i data-lucide="sunset" class="w-5 h-5 mr-2"></i>
+                                <span class="lang-en">Plan B: Sunset at the Beach</span>
+                                <span class="lang-pt">Plano B: Pôr do Sol na Praia</span>
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-300">
+                                <span class="lang-en"><a href="https://www.tripadvisor.com/Search?q=Singita+Miracle+Beach+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Singita Miracle Beach (Għajn Tuffieħa)</strong></a>: Head here around 18:30. It has a fantastic, laid-back lounge vibe right on the sand. Great value (pizzas/platters). Toast to an incredible trip with one of the best sunsets in Malta.</span>
+                                <span class="lang-pt"><a href="https://www.tripadvisor.com/Search?q=Singita+Miracle+Beach+Malta" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors"><strong>Singita Miracle Beach (Għajn Tuffieħa)</strong></a>: Chegue lá por volta das 18:30. Uma vibe de lounge fantástica bem na areia. Preços excelentes. Brindem à viagem com o melhor pôr do sol de Malta!</span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="md:w-1/3 h-64 md:h-auto border-l border-slate-100 dark:border-slate-700">
+                    <img src="https://drive.google.com/thumbnail?id=1CQDsn73vPFZ3Evb_SDuNWu_pyIcZ9AH7&sz=w800-h800" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x800/1e293b/cbd5e1?text=Paradise+Bay';"
+                         alt="Paradise Bay" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </article>
+
+        <!-- DAY 5 -->
+        <article class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors">
+            <div class="bg-slate-800 dark:bg-slate-950 text-white px-6 py-4 flex justify-between items-center transition-colors">
+                <h2 class="text-2xl font-bold m-0 tracking-wide">
+                    <span class="lang-en">Day 5: Auf Wiedersehen, Malta!</span>
+                    <span class="lang-pt">Dia 5: Adeus, Malta!</span>
+                </h2>
+                <span class="text-amber-300 font-semibold tracking-wider text-sm">
+                    <span class="lang-en">JULY 16</span>
+                    <span class="lang-pt">16 DE JULHO</span>
+                </span>
+            </div>
+            <div class="p-0 md:flex">
+                <div class="md:w-1/3 h-64 md:h-auto border-r border-slate-100 dark:border-slate-700">
+                    <img src="https://drive.google.com/thumbnail?id=14DAV_YbiOhKt07rKr6oqjqzlObBNDTQn&sz=w800-h800" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x800/1e293b/cbd5e1?text=Airport+Departure';"
+                         alt="Airport Departure" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6 md:p-8 md:w-2/3 space-y-6">
+                    
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">04:30 &ndash; 05:15</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Early Rise & Quick Breakfast</span>
+                                <span class="lang-pt">Acordar Cedo e Café Rápido</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Wake up bright and early in Mosta. Grab a quick bite and double-check passports and belongings.</span>
+                                <span class="lang-pt">Acordem bem cedo em Mosta. Tomem um café da manhã rápido e façam uma última checagem nos passaportes e pertences.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">05:15 &ndash; 05:45</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Airport Commute</span>
+                                <span class="lang-pt">Ida para o Aeroporto</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Leave Mosta and head to <a href="https://www.google.com/maps/search/Malta+International+Airport" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Malta International Airport (MLA)</a>. Traffic shouldn't be an issue at this hour.</span>
+                                <span class="lang-pt">Saiam de Mosta em direção ao <a href="https://www.google.com/maps/search/Malta+International+Airport" target="_blank" class="underline decoration-slate-400 hover:text-amber-500 transition-colors">Aeroporto Internacional de Malta (MLA)</a>. O trânsito deve estar tranquilo a esta hora.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-28 flex-shrink-0 text-slate-400 dark:text-slate-500 font-semibold pt-1">07:15 &ndash; 09:45</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 dark:text-white">
+                                <span class="lang-en">Flight KM 306 to Munich</span>
+                                <span class="lang-pt">Voo KM 306 para Munique</span>
+                            </h4>
+                            <p class="text-slate-600 dark:text-slate-300 mt-1">
+                                <span class="lang-en">Flight departs at 07:15, arriving at Munich (MUC) Terminal 2 at 09:45. Have a safe flight!</span>
+                                <span class="lang-pt">O voo parte às 07:15, chegando no Terminal 2 de Munique (MUC) às 09:45. Façam uma boa viagem!</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 text-center py-8">
+        <p class="text-sm">Safe travels &amp; unforgettable memories.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Dark Mode Logic
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            
+            if (html.classList.contains('dark')) {
+                icon.setAttribute('data-lucide', 'sun');
+            } else {
+                icon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons(); // Re-render the specific icon
+        }
+
+        // Initialize language
+        document.documentElement.setAttribute('lang', 'pt');
+
+        // Language Toggle Logic
+        function toggleLanguage() {
+            const html = document.documentElement;
+            const indicator = document.getElementById('lang-indicator');
+            const currentLang = html.getAttribute('lang');
+
+            if (currentLang === 'en') {
+                html.setAttribute('lang', 'pt');
+                indicator.innerText = 'EN'; // the button shows what it will toggle TO
+            } else {
+                html.setAttribute('lang', 'en');
+                indicator.innerText = 'PT';
+            }
+        }
+
+        // Share Modal Logic
+        const shareModal = document.getElementById('share-modal');
+
+        function openShareModal() {
+            shareModal.classList.remove('hidden');
+            setTimeout(() => {
+                shareModal.classList.remove('opacity-0');
+                shareModal.querySelector('div').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeShareModal() {
+            shareModal.classList.add('opacity-0');
+            shareModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                shareModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close modal when clicking outside
+        shareModal.addEventListener('click', (e) => {
+            if (e.target === shareModal) closeShareModal();
+        });
+
+        // Share Options
+        function shareWhatsApp() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://api.whatsapp.com/send?text=${url}`, '_blank');
+            closeShareModal();
+        }
+
+        function shareEmail() {
+            const url = encodeURIComponent(window.location.href);
+            const title = document.documentElement.getAttribute('lang') === 'en' ? 'Check out this Malta Itinerary' : 'Confira este roteiro de Malta';
+            window.open(`mailto:?subject=${title}&body=${url}`, '_self');
+            closeShareModal();
+        }
+
+        function copyLink() {
+            // Using execCommand as clipboard API may be restricted in some iframe environments
+            const tempInput = document.createElement('input');
+            tempInput.value = window.location.href;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast(document.documentElement.getAttribute('lang') === 'en' ? 'Link copied to clipboard!' : 'Link copiado para a área de transferência!');
+            closeShareModal();
+        }
+
+        // Custom Toast function to replace native alert()
+        function showToast(msg) {
+            let toast = document.getElementById('toast-msg');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-msg';
+                toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl z-50 transition-opacity duration-300 opacity-0 font-medium text-sm border border-slate-600';
+                document.body.appendChild(toast);
+            }
+            toast.innerText = msg;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => toast.classList.add('opacity-0'), 3000);
+        }
+    </script>
+</body>
+</html>
